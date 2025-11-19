@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test d'Anglais - Évaluez Votre Niveau</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .header p {
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question-container {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background-color: rgba(76, 201, 240, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .option input {
+            margin-right: 10px;
+            width: auto;
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--primary));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .result-container {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .result-level {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-description {
+            margin-bottom: 25px;
+            color: #6c757d;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .user-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .user-info h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .level-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .level-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: #f8f9fa;
+            transition: var(--transition);
+            border-top: 3px solid var(--primary);
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .level-card h4 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .level-card p {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .language-note {
+            background-color: #e7f3ff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .language-note i {
+            color: var(--accent);
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .level-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .level-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .navigation .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-language"></i> Test d'Anglais</h1>
+            <p>Évaluez votre niveau d'anglais de A1 à C2</p>
+        </div>
+        
+        <div class="content">
+            <!-- User Information Form -->
+            <div id="user-info-form">
+                <div class="language-note">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Note :</strong> Ce site est en français, mais le test contient des questions en anglais pour évaluer votre niveau.
+                </div>
+                
+                <div class="form-group">
+                    <label for="name">Nom Complet</label>
+                    <input type="text" id="name" placeholder="Entrez votre nom complet">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Numéro de Téléphone</label>
+                    <input type="tel" id="phone" placeholder="Entrez votre numéro de téléphone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Adresse Email</label>
+                    <input type="email" id="email" placeholder="Entrez votre adresse email">
+                </div>
+                
+                <button id="start-test" class="btn btn-block">Commencer le Test</button>
+            </div>
+            
+            <!-- Test Section -->
+            <div id="test-section" class="hidden">
+                <div class="language-note">
+                    <i class="fas fa-globe"></i>
+                    Les questions et réponses sont en anglais pour évaluer votre niveau. Choisissez la réponse correcte.
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span>Question <span id="current-question">1</span> sur <span id="total-questions">10</span></span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                </div>
+                
+                <div id="question-container"></div>
+                
+                <div class="navigation">
+                    <button id="prev-btn" class="btn">Précédent</button>
+                    <button id="next-btn" class="btn">Suivant</button>
+                    <button id="submit-test" class="btn hidden">Soumettre le Test</button>
+                </div>
+            </div>
+            
+            <!-- Results Section -->
+            <div id="results-section" class="hidden">
+                <div class="result-container">
+                    <div class="result-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h2>Votre Niveau d'Anglais</h2>
+                    <div class="result-level" id="result-level">B2</div>
+                    <p class="result-description" id="result-description">
+                        Vous avez un niveau d'anglais intermédiaire supérieur (B2). Vous pouvez comprendre les idées principales de textes complexes et interagir avec un certain degré de fluidité.
+                    </p>
+                    
+                    <div class="user-info">
+                        <h3>Informations du Participant</h3>
+                        <p><strong>Nom :</strong> <span id="result-name">-</span></p>
+                        <p><strong>Téléphone :</strong> <span id="result-phone">-</span></p>
+                        <p><strong>Email :</strong> <span id="result-email">-</span></p>
+                    </div>
+                    
+                    <button id="retake-test" class="btn">Refaire le Test</button>
+                </div>
+                
+                <div class="level-info">
+                    <div class="level-card">
+                        <h4>A1 - Débutant</h4>
+                        <p>Peut comprendre et utiliser des expressions basiques</p>
+                    </div>
+                    <div class="level-card">
+                        <h4>A2 - Élémentaire</h4>
+                        <p>Peut communiquer dans des situations simples et routinières</p>
+                    </div>
+                    <div class="level-card">
+                        <h4>B1 - Intermédiaire</h4>
+                        <p>Peut gérer la plupart des situations en voyage</p>
+                    </div>
+                    <div class="level-card">
+                        <h4>B2 - Intermédiaire Supérieur</h4>
+                        <p>Peut interagir avec fluidité et spontanéité</p>
+                    </div>
+                    <div class="level-card">
+                        <h4>C1 - Avancé</h4>
+                        <p>Peut utiliser la langue de manière flexible et efficace</p>
+                    </div>
+                    <div class="level-card">
+                        <h4>C2 - Maîtrise</h4>
+                        <p>Peut comprendre sans effort pratiquement tout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test questions (in English)
+        const questions = [
+            {
+                question: "Choose the correct word to complete the sentence: I _____ to the cinema yesterday.",
+                options: ["go", "went", "have gone", "going"],
+                correct: 1
+            },
+            {
+                question: "Which sentence is grammatically correct?",
+                options: [
+                    "She don't like coffee.",
+                    "She doesn't likes coffee.",
+                    "She doesn't like coffee.",
+                    "She not like coffee."
+                ],
+                correct: 2
+            },
+            {
+                question: "What is the opposite of 'generous'?",
+                options: ["Kind", "Stingy", "Friendly", "Polite"],
+                correct: 1
+            },
+            {
+                question: "Choose the correct preposition: I'm interested _____ learning Spanish.",
+                options: ["in", "on", "at", "for"],
+                correct: 0
+            },
+            {
+                question: "Which word is a synonym for 'happy'?",
+                options: ["Sad", "Joyful", "Angry", "Tired"],
+                correct: 1
+            },
+            {
+                question: "Complete the sentence: If I _____ you, I would study more.",
+                options: ["am", "was", "were", "be"],
+                correct: 2
+            },
+            {
+                question: "What is the past participle of 'eat'?",
+                options: ["Ate", "Eaten", "Eating", "Eats"],
+                correct: 1
+            },
+            {
+                question: "Choose the correct sentence:",
+                options: [
+                    "The children is playing in the garden.",
+                    "The children are playing in the garden.",
+                    "The children am playing in the garden.",
+                    "The children be playing in the garden."
+                ],
+                correct: 1
+            },
+            {
+                question: "What does the phrase 'break the ice' mean?",
+                options: [
+                    "To fall through thin ice",
+                    "To start a conversation in a formal situation",
+                    "To destroy something",
+                    "To cool down a drink"
+                ],
+                correct: 1
+            },
+            {
+                question: "Which sentence uses the present perfect tense correctly?",
+                options: [
+                    "I have seen that movie last week.",
+                    "I saw that movie last week.",
+                    "I have seen that movie.",
+                    "I see that movie."
+                ],
+                correct: 2
+            }
+        ];
+
+        // DOM elements
+        const userInfoForm = document.getElementById('user-info-form');
+        const testSection = document.getElementById('test-section');
+        const resultsSection = document.getElementById('results-section');
+        const startTestBtn = document.getElementById('start-test');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitTestBtn = document.getElementById('submit-test');
+        const retakeTestBtn = document.getElementById('retake-test');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress-bar');
+        const currentQuestionEl = document.getElementById('current-question');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const progressPercent = document.getElementById('progress-percent');
+        const resultLevel = document.getElementById('result-level');
+        const resultDescription = document.getElementById('result-description');
+        const resultName = document.getElementById('result-name');
+        const resultPhone = document.getElementById('result-phone');
+        const resultEmail = document.getElementById('result-email');
+
+        // Test state
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let userInfo = {};
+
+        // Initialize the test
+        function initTest() {
+            totalQuestionsEl.textContent = questions.length;
+            showQuestion(currentQuestionIndex);
+            updateProgress();
+        }
+
+        // Show question
+        function showQuestion(index) {
+            const question = questions[index];
+            currentQuestionEl.textContent = index + 1;
+            
+            let optionsHTML = '';
+            question.options.forEach((option, i) => {
+                const isSelected = userAnswers[index] === i;
+                optionsHTML += `
+                    <div class="option ${isSelected ? 'selected' : ''}" data-index="${i}">
+                        <input type="radio" name="answer" ${isSelected ? 'checked' : ''}>
+                        <span>${option}</span>
+                    </div>
+                `;
+            });
+            
+            questionContainer.innerHTML = `
+                <div class="question-container">
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                </div>
+            `;
+            
+            // Add event listeners to options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedIndex = parseInt(this.getAttribute('data-index'));
+                    userAnswers[currentQuestionIndex] = selectedIndex;
+                    
+                    // Update UI
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    this.querySelector('input').checked = true;
+                    
+                    // Enable/disable buttons
+                    updateNavigationButtons();
+                });
+            });
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+        }
+
+        // Update navigation buttons
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitTestBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitTestBtn.classList.add('hidden');
+            }
+            
+            // Enable submit only if all questions are answered
+            const allAnswered = userAnswers.every(answer => answer !== null);
+            submitTestBtn.disabled = !allAnswered;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            const progress = (answeredCount / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressPercent.textContent = `${Math.round(progress)}%`;
+        }
+
+        // Calculate result
+        function calculateResult() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === questions[index].correct
+            ).length;
+            
+            const score = (correctAnswers / questions.length) * 100;
+            
+            // Determine level based on score
+            let level, description;
+            if (score >= 90) {
+                level = "C2";
+                description = "Vous avez un niveau d'anglais de maîtrise (C2). Vous pouvez comprendre sans effort pratiquement tout ce que vous entendez ou lisez et pouvez vous exprimer spontanément, très couramment et avec précision.";
+            } else if (score >= 80) {
+                level = "C1";
+                description = "Vous avez un niveau d'anglais avancé (C1). Vous pouvez comprendre une large gamme de textes exigeants et plus longs et reconnaître des significations implicites. Vous pouvez vous exprimer couramment et spontanément.";
+            } else if (score >= 70) {
+                level = "B2";
+                description = "Vous avez un niveau d'anglais intermédiaire supérieur (B2). Vous pouvez comprendre les idées principales de textes complexes et interagir avec un certain degré de fluidité et de spontanéité.";
+            } else if (score >= 60) {
+                level = "B1";
+                description = "Vous avez un niveau d'anglais intermédiaire (B1). Vous pouvez comprendre les points principaux d'une conversation claire sur des sujets familiers et gérer la plupart des situations en voyage.";
+            } else if (score >= 50) {
+                level = "A2";
+                description = "Vous avez un niveau d'anglais élémentaire (A2). Vous pouvez comprendre des phrases et des expressions fréquemment utilisées en relation avec des domaines de pertinence immédiate.";
+            } else {
+                level = "A1";
+                description = "Vous avez un niveau d'anglais débutant (A1). Vous pouvez comprendre et utiliser des expressions familières et quotidiennes ainsi que des phrases très simples visant à satisfaire des besoins concrets.";
+            }
+            
+            return { level, description, score };
+        }
+
+        // Event listeners
+        startTestBtn.addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            
+            if (!name || !phone || !email) {
+                alert('Veuillez remplir tous les champs avant de commencer le test.');
+                return;
+            }
+            
+            // Save user info
+            userInfo = { name, phone, email };
+            
+            // Show test section
+            userInfoForm.classList.add('hidden');
+            testSection.classList.remove('hidden');
+            
+            // Initialize test
+            initTest();
+        });
+
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        });
+
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+                updateProgress();
+            }
+        });
+
+        submitTestBtn.addEventListener('click', function() {
+            // Calculate result
+            const result = calculateResult();
+            
+            // Display result
+            resultLevel.textContent = result.level;
+            resultDescription.textContent = result.description;
+            resultName.textContent = userInfo.name;
+            resultPhone.textContent = userInfo.phone;
+            resultEmail.textContent = userInfo.email;
+            
+            // Show results section
+            testSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+        });
+
+        retakeTestBtn.addEventListener('click', function() {
+            // Reset test state
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            
+            // Show user info form
+            resultsSection.classList.add('hidden');
+            userInfoForm.classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('email').value = '';
+        });
+    </script>
+</body>
+</html>
